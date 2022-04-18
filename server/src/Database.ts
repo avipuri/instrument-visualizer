@@ -79,14 +79,36 @@ export class DB {
     const db = await this.getDB();
     // Here, we have a callback that expects two arguments (resolve and
     // reject), both of which are themselves callbacks.
+
+    
+    console.log("path is",path);
+    console.log("args are:",args);
     return new Promise((resolve, reject) => {
-      db.all(query, args, (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows.map(r => camelcaseKeys(r)));
-        }
-      });
+      if (path === 'filter_songs'){
+        query = `SELECT * FROM songs WHERE ${args[0]} = \'${args[1]}\';`;
+        console.log("query is",query);
+        db.all(query,  (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log("return val: ",rows)
+            resolve(rows.map(r => camelcaseKeys(r)));
+          }
+        });
+      }
+      else {
+        console.log("query is",query);
+        db.all(query, args, (err, rows) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log("return val: ",rows)
+            resolve(rows.map(r => camelcaseKeys(r)));
+          }
+        });
+
+      }
+     
     });
   }
 }

@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io';
-import { intoValidator, Schema } from './handlers/Schemas';
+import { intoValidator,intoFilterValidator, Schema } from './handlers/Schemas';
 
 /**
  * A MessageHandler controls what the server does when a particular event
@@ -27,7 +27,7 @@ export class MessageHandler {
    * @param socket the socket
    */
   public attach(socket: Socket) {
-    const validator = intoValidator(this.schema);
+    const validator = intoFilterValidator(this.schema);
     socket.on(this.eventName, async obj => {
       const validation = validator.validate(obj);
 

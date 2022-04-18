@@ -2,6 +2,7 @@ import { Server, Socket } from 'socket.io';
 import http from 'http';
 import { MessageHandler } from './MessageHandler';
 import { GetSongsHandler } from './handlers/GetSongsHandler';
+import { FilterSongsHandler } from './handlers/FilterSongsHandler';
 
 const PORT = 3001;
 const VALID_ORIGINS = ['http://localhost:3000'];
@@ -10,7 +11,7 @@ const PING_INTERVAL_MS = 10000;
 const WS_PATH = '/ws';
 
 // Add messages you'd like to support here
-export const validMessages: MessageHandler[] = [GetSongsHandler];
+export const validMessages: MessageHandler[] = [GetSongsHandler, FilterSongsHandler];
 
 function disconnectHandler(socket: Socket): (reason: string) => void {
    return reason => {
@@ -26,9 +27,10 @@ function disconnectHandler(socket: Socket): (reason: string) => void {
 function connectHandler(socket: Socket) {
    socket.once('disconnect', disconnectHandler(socket));
    socket.onAny((event, msg) =>
-      console.debug(`${event}[${socket.id}]: ${JSON.stringify(msg)}`),
+      console.debug(`received paylod:${event}[${socket.id}]: ${JSON.stringify(msg)}`),
    );
    validMessages.forEach(handler => handler.attach(socket));
+   console.debug('validation done')
 }
 
 export async function initServer(): Promise<Server> {
@@ -50,6 +52,7 @@ export async function initServer(): Promise<Server> {
    console.debug(`opening socket on port ${PORT}`);
 
    server.on('connection', connectHandler);
+   console.debug('connectionHandler out');
    server.attach(httpServer);
 
    return server;

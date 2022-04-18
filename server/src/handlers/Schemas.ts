@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import Joi, { string } from 'joi';
 
 /**
  * Schemas are used by MessageHandlers to validate that the server has received
@@ -10,6 +10,8 @@ const positiveInt = Joi.number().positive().required();
 
 const username = reasonableString;
 const id = positiveInt;
+const metadata = Joi.string().max(128, 'utf8');
+const args = Joi.string().max(128, 'utf8');
 
 export type Schema = {
   [key: string]: Joi.AnySchema;
@@ -18,6 +20,8 @@ export type Schema = {
 export default {
   username,
   id,
+  metadata,
+  args
 };
 
 /**
@@ -27,5 +31,10 @@ export default {
  * @returns the validator object
  */
 export function intoValidator(schema: Schema): Joi.ObjectSchema {
-  return Joi.object({ _id: id, ...schema }).required();
+  return Joi.object({ _id: id,  ...schema }).required();
 }
+
+export function intoFilterValidator(schema: Schema): Joi.ObjectSchema {
+  return Joi.object({ _id: id, metadata: metadata, args: args, ...schema }).required();
+}
+

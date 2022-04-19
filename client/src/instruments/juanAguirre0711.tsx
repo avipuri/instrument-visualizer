@@ -26,10 +26,7 @@ export function BassGuitarKey({
   minor,
   index,
 }: BassGuitarKeyProps): JSX.Element {
-  /**
-   * This React component corresponds to either a major or minor key in the Violin.
-   * See `ViolinKeyWithoutJSX` for the React component without JSX.
-   */
+  
   let idv=Math.floor(index/6);
   let idh=index%6;
   console.log(`${note}rem`)
@@ -76,8 +73,9 @@ function BassGuitarKeyWithoutJSX({
   return React.createElement(
     'div',
     {
-      onMouseDown: () => synth?.triggerAttack(`${note}`),
-      onMouseUp: () => synth?.triggerRelease('+0.25'),
+      // onMouseDown: () => synth?.triggerAttack(`${note}`),
+      // onMouseUp: () => synth?.triggerRelease('+0.10'),
+      onMouseDown: () => synth?.triggerAttackRelease(`${note}`, 1),
       className: classNames('ba pointer absolute dim', {
         'bg-black black h3': minor,
         'black bg-white h4': !minor,
@@ -110,30 +108,24 @@ function BassGuitarType({ title, onClick, active }: any): JSX.Element {
 
 function BassGuitar({ synth, setSynth }: InstrumentProps): JSX.Element {
   const keys = List([
-    { note: 'Db2', idx: 0 },
-    { note: 'Eb2', idx: 1 },
-    { note: 'Fb2', idx: 2 },
-    { note: 'Gb2', idx: 3 },
-    { note: 'Ab2', idx: 4 },
-    { note: 'Bb2', idx: 5 },
-    { note: 'Cb3', idx: 6 },
-    { note: 'Db3', idx: 7 },
-    { note: 'Eb3', idx: 8 },
-    { note: 'Fb3', idx: 9 },
-    { note: 'Gb3', idx: 10 },
-    { note: 'Ab3', idx: 11 },
-    { note: 'Db3', idx: 12 },
-    { note: 'Eb3', idx: 13 },
-    { note: 'Fb3', idx: 14 },
-    { note: 'Gb3', idx: 15 },
-    { note: 'Ab3', idx: 16 },
-    { note: 'Bb3', idx: 17 },
-    { note: 'Db1', idx: 18},
-    { note: 'Eb1', idx: 19 },
-    { note: 'Fb1', idx: 20 },
-    { note: 'Gb1', idx: 21 },
-    { note: 'Ab1', idx: 22 },
-    { note: 'Bb1', idx: 23 },
+    { note: 'Db1', idx: 0},
+    { note: 'Eb1', idx: 1 },
+    { note: 'Fb1', idx: 2 },
+    { note: 'Gb1', idx: 3 },
+    { note: 'Ab1', idx: 4 },
+    { note: 'Bb1', idx: 5 },
+    { note: 'Db2', idx: 6 },
+    { note: 'Eb2', idx: 7 },
+    { note: 'Fb2', idx: 8 },
+    { note: 'Gb2', idx: 9 },
+    { note: 'Ab2', idx: 10 },
+    { note: 'Bb2', idx: 11 },
+    { note: 'Cb3', idx: 12 },
+    { note: 'Db3', idx: 13 },
+    { note: 'Eb3', idx: 14 },
+    { note: 'Fb3', idx: 15 },
+    { note: 'Gb3', idx: 16 },
+    { note: 'Ab3', idx: 17 }
   ]);
 
   const setOscillator = (newType: Tone.ToneOscillatorType) => {
@@ -161,7 +153,7 @@ function BassGuitar({ synth, setSynth }: InstrumentProps): JSX.Element {
 
   return (
     <div className="pv4">
-      <div className="relative dib h4 w-100 ml4">
+      <div className="relative dib h4 w-100 ml7">
         {Range(2, 3).map(octave =>
           keys.map(key => {
             const isMinor = key.note.indexOf('b') === 1;

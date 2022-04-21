@@ -6,7 +6,6 @@ import { PianoInstrument } from './instruments/Piano';
 import { ViolinInstrument } from './instruments/anhduynguyen8598';
 import { WaveformVisualizer } from './visualizers/Waveform';
 import { CircularVisualizer } from './visualizers/anhduynguyen8598';
-import { SpectrumVisualizer } from './visualizers/CiYuan53';
 
 
 /** ------------------------------------------------------------------------ **
@@ -24,7 +23,7 @@ const instruments = List([PianoInstrument, ViolinInstrument]);       // similar 
  * Start with the default waveform visualizer.
  * Add your visualizers to this list.
  */
-const visualizers = List([WaveformVisualizer, CircularVisualizer, SpectrumVisualizer]);    // similar to Visualizer[]
+const visualizers = List([WaveformVisualizer, CircularVisualizer]);    // similar to Visualizer[]
 
 
 /**
@@ -33,6 +32,10 @@ const visualizers = List([WaveformVisualizer, CircularVisualizer, SpectrumVisual
  * 'instrument': List<Instrument>
  * 'visualizer': List<Visualizer>
  */
+// const songs = List([WaveformVisualizer, CircularVisualizer]);    // similar to Visualizer[]
+
+
+
 export const defaultState: AppState = Map<string, any>({
   'instruments': instruments,
   'visualizers': visualizers,

@@ -1,7 +1,7 @@
 // 3rd party library imports
 import classNames from 'classnames';
 import { List } from 'immutable';
-import React from 'react';
+import React, { useState } from "react";
 import { useLocation, Link } from 'react-router-dom';
 import {
   RadioButton20,
@@ -10,11 +10,12 @@ import {
 } from '@carbon/icons-react';
 
 // project imports
-import { DispatchAction } from './Reducer';
-import { AppState } from './State';
+import { AppState, defaultState } from './State';
 import { Instrument } from './Instruments';
 import { Visualizer } from './Visualizers';
-
+import { initializeSocket, send } from './Socket';
+import { DispatchAction, appReducer } from './Reducer';
+import { useReducer, useEffect } from 'react';
 
 /** ------------------------------------------------------------------------ **
  * SideNav component
@@ -50,6 +51,11 @@ export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
    * | |           |   |
    * | |-----------|   |
    * |                 |
+   * | FiltersNav        |
+   * | |-----------|   |
+   * | |           |   |
+   * | |-----------|   |
+   * |                 |
    * |-----------------|
   */
 
@@ -62,6 +68,7 @@ export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
         <InstrumentsNav state={state} dispatch={dispatch} />
         <VisualizersNav state={state} dispatch={dispatch} />
         <SongsNav state={state} dispatch={dispatch} />
+        <FilterNav state={state} dispatch={dispatch} />
       </div>
     </div>
   );
@@ -171,6 +178,92 @@ function SongsNav({ state, dispatch }: SideNavProps): JSX.Element {
           {song.get('songTitle')}
         </div>
       ))}
+
+    </Section>
+  );
+}
+
+function FilterNav({ state,dispatch }: SideNavProps): JSX.Element {
+  /** 
+   *  FilterNav
+   *  |-----------------|
+   *  | Section         |
+   *  | |-------------| |
+   *  | | RadioButton | |
+   *  | |-------------| | 
+   *  | | RadioButton | |
+   *  | |-------------| |
+   *  |      ...        |
+   *  |-----------------|
+  */
+  
+  const [args, setName] = useState("");
+  const [metadata, setMeta] = useState("all");
+
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+      
+      console.debug('metadata',metadata);
+      let payloadId = metadata.toString();
+      initializeSocket(
+        async socket => {
+          dispatch(new DispatchAction('SET_SOCKET', { socket }));
+          const { songs } = (metadata==='all')?await send(socket, 'get_songs', {}):await send(socket, 'filter_songs', {'metadata':metadata,'args':args});
+
+          console.log("filter out",songs);
+         
+          dispatch(new DispatchAction('SET_SONGS', { songs }));
+          console.log('bla bla',state.get('songs', List()))
+
+        },
+        () => {
+          dispatch(new DispatchAction('DELETE_SOCKET'));
+        },
+      );
+  }
+
+  return (
+    <Section title="Filter">
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" onChange={e => setName(e.target.value)} />        </label>
+        <input type="submit" value="Submit" />
+      </form>
+      <p>
+          <input
+            type="radio"
+            name="meta-data"
+            value="Artist"
+            id="artist"
+            onClick={() => setMeta("artist")}
+            checked={metadata==="artist"}
+          />
+          <label htmlFor="Artist">Artist</label>
+        </p>
+        <p>
+          <input
+            type="radio"
+            name="meta-data"
+            value="Album"
+            id="album"
+            onClick={() => setMeta("album")}
+            checked={metadata==="album"}
+          />
+          <label htmlFor="Album">Album</label>
+        </p>
+        <p>
+          <input
+            type="radio"
+            name="meta-data"
+            value="All"
+            id="all"
+            onClick={() => setMeta("all")}
+            checked={metadata==="all"}
+          />
+          <label htmlFor="All">All</label>
+        </p>
     </Section>
   );
 }
@@ -184,8 +277,13 @@ function SongsNav({ state, dispatch }: SideNavProps): JSX.Element {
  * Radio Button
  ** ------------------------------------- */
 
- type RadioButtonProps = {
+type RadioButtonProps = {
   to: any,
+  text: string,
+  active: boolean,
+  onClick: () => void
+};
+type SearchButtonProps = {
   text: string,
   active: boolean,
   onClick: () => void
@@ -210,6 +308,7 @@ function RadioButton({ to, text, active, onClick }: RadioButtonProps): JSX.Eleme
 }
 
 
+
 /** ------------------------------------- **
  * Section
  ** ------------------------------------- */
@@ -222,3 +321,6 @@ const Section: React.FC<{ title: string }> = ({ title, children }) => {
     </div>
   );
 };
+
+
+

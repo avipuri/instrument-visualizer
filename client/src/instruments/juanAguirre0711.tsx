@@ -35,62 +35,67 @@ export function BassGuitarKey({
     // 1. The JSX refers to the HTML-looking syntax within TypeScript.
     // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
     // 3. The curly braces `{` and `}` should remind you of string interpolation.
-    
-    <div
-      onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
-      onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
-      className={classNames('ba pointer absolute dim', {
-        'bg-gold black h3': minor, // minor keys are black
-        'black bg-white h4': !minor, // major keys are white
-      })}
-      
-      style={{
-        // CSS
-        top: `${idv * 1}rem`,
-        left: `${idh * 10}%`,
-        zIndex: 0,//minor ? 1 : 0,
-        width: '10%',//minor ? '1.5rem' : '2rem',
-        height: '0.25rem',
-       // marginLeft: '0.25rem',//minor ? '0.25rem' : 0,
-      }}
-      
-    ></div>
+    <div style={{
+      background: '#e6ccb3',
+      marginTop: '-7px',
+      width: '930px',
+      height: '14.7px'
+    }}>
+      <div
+        onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
+        onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
+        className={classNames('ba pointer absolute dim', {
+          'bg-white black h3': minor, // minor keys are black
+          'black bg-white h4': !minor, // major keys are white
+        })}
+        
+        style={{
+          // CSS
+          top: `${idv * 4}rem`,
+          left: `${idh * 10}%`,
+          zIndex: 0,//minor ? 1 : 0,
+          width: '10%',//minor ? '1.5rem' : '2rem',
+          height: '0.25rem',
+        // marginLeft: '0.25rem',//minor ? '0.25rem' : 0,
+        }}
+        
+      ></div>
+    </div>
   );
 }
 
 // eslint-disable-next-line
-function BassGuitarKeyWithoutJSX({
-  note,
-  synth,
-  minor,
-  index,
-}: BassGuitarKeyProps): JSX.Element {
-  console.log(`${note}rem`)
-  /**
-   * This React component for pedagogical purposes.
-   * See `ViolinKey` for the React component with JSX (JavaScript XML).
-   */
-  return React.createElement(
-    'div',
-    {
-      // onMouseDown: () => synth?.triggerAttack(`${note}`),
-      // onMouseUp: () => synth?.triggerRelease('+0.10'),
-      onMouseDown: () => synth?.triggerAttackRelease(`${note}`, 1),
-      className: classNames('ba pointer absolute dim', {
-        'bg-black black h3': minor,
-        'black bg-white h4': !minor,
-      }),
-      style: {
-        top: 0,
-        left: `${index * 2}rem`,
-        zIndex: minor ? 1 : 0,
-        width: minor ? '1.5rem' : '2rem',
-        marginLeft: minor ? '0.25rem' : 0,
-      },
-    },
-    [],
-  );
-}
+// function BassGuitarKeyWithoutJSX({
+//   note,
+//   synth,
+//   minor,
+//   index,
+// }: BassGuitarKeyProps): JSX.Element {
+//   console.log(`${note}rem`)
+//   /**
+//    * This React component for pedagogical purposes.
+//    * See `ViolinKey` for the React component with JSX (JavaScript XML).
+//    */
+//   return React.createElement(
+//     'div',
+//     {
+//       onMouseDown: () => synth?.triggerAttack(`${note}`),
+//       onMouseUp: () => synth?.triggerRelease('+0.10'),
+//       className: classNames('ba pointer absolute dim', {
+//         'bg-black black h3': minor,
+//         'black bg-white h4': !minor,
+//       }),
+//       style: {
+//         top: 0,
+//         left: `${index * 2}rem`,
+//         zIndex: minor ? 1 : 0,
+//         width: minor ? '1.5rem' : '2rem',
+//         marginLeft: minor ? '0.25rem' : 0,
+//       },
+//     },
+//     [],
+//   );
+// }
 
 function BassGuitarType({ title, onClick, active }: any): JSX.Element {
   return (

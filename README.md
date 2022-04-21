@@ -49,3 +49,10 @@ Runs the server in development mode.
 
 The server will restart if you make edits.
 You will also see errors in the console.
+
+use the following to install correct node version:
+
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+ nvm install 16.7.0

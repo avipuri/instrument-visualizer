@@ -16,7 +16,7 @@ export const Testing = new Visualizer(
     p5.noiseDetail(4, 4);
 
     const values = analyzer.getValue();
-    p5.beginShape();
+    p5.beginShape(); // Starting the shape, which will be a circle reference: https://p5js.org/reference/#group-Shape
 
     var space = 1
 

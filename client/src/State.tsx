@@ -9,6 +9,8 @@ import { WaveformVisualizer } from './visualizers/Waveform';
 import { CircularVisualizer } from './visualizers/anhduynguyen8598';
 import { SpectrumVisualizer } from './visualizers/CiYuan53';
 import { Testing} from './visualizers/juanaguirre0711';
+import { UkuleleInstrument } from './instruments/Ukulele';
+import { WaterVisualizer } from './visualizers/avipuri';
 
 
 /** ------------------------------------------------------------------------ **
@@ -20,13 +22,13 @@ export type AppState = Map<string, any>;           // similar to { [id: string]:
  * Start with the default piano instrument.
  * Add your instruments to this list.
  */
-const instruments = List([PianoInstrument, ViolinInstrument, BassGuitarInstrument]);       // similar to Instrument[]
+const instruments = List([PianoInstrument, ViolinInstrument, BassGuitarInstrument, UkuleleInstrument]);       // similar to Instrument[]
 
 /**
  * Start with the default waveform visualizer.
  * Add your visualizers to this list.
  */
-const visualizers = List([WaveformVisualizer, CircularVisualizer, SpectrumVisualizer, Testing]);    // similar to Visualizer[]
+const visualizers = List([WaveformVisualizer, CircularVisualizer, SpectrumVisualizer, Testing, WaterVisualizer]);    // similar to Visualizer[]
 
 
 /**

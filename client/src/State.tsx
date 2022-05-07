@@ -10,7 +10,7 @@ import { CircularVisualizer } from './visualizers/anhduynguyen8598';
 import { SpectrumVisualizer } from './visualizers/CiYuan53';
 import { Testing} from './visualizers/juanaguirre0711';
 import { UkuleleInstrument } from './instruments/Ukulele';
-import { WaterVisualizer } from './visualizers/avipuri';
+import { VibroBoxVisualizer } from './visualizers/avipuri';
 
 
 /** ------------------------------------------------------------------------ **
@@ -28,7 +28,7 @@ const instruments = List([PianoInstrument, ViolinInstrument, BassGuitarInstrumen
  * Start with the default waveform visualizer.
  * Add your visualizers to this list.
  */
-const visualizers = List([WaveformVisualizer, CircularVisualizer, SpectrumVisualizer, Testing, WaterVisualizer]);    // similar to Visualizer[]
+const visualizers = List([WaveformVisualizer, CircularVisualizer, SpectrumVisualizer, Testing, VibroBoxVisualizer]);    // similar to Visualizer[]
 
 
 /**

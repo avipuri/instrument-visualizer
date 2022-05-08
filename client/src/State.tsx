@@ -10,7 +10,7 @@ import { WaveformVisualizer } from './visualizers/Waveform';
 import { CircularVisualizer } from './visualizers/anhduynguyen8598';
 import { SpectrumVisualizer } from './visualizers/CiYuan53';
 import { Testing} from './visualizers/juanaguirre0711';
-import { UkuleleInstrument } from './instruments/Ukulele';
+import { UkuleleInstrument } from './instruments/avipuri';
 import { VibroBoxVisualizer } from './visualizers/avipuri';
 
 

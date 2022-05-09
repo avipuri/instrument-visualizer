@@ -229,7 +229,7 @@ function FilterNav({ state,dispatch }: SideNavProps): JSX.Element {
         <label>
           Name:
           <input type="text" onChange={e => setName(e.target.value)} />        </label>
-        <input type="submit" value="Submit" />
+        <input type="submit" value="Submit" onSubmit={handleSubmit} />
       </form>
       <p>
           <input

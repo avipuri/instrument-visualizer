@@ -52,13 +52,13 @@ export function UkuleleKey({
           style={{
             // CSS
             //center on postion of string and fret on image
-            top: `${idstr * 1}rem`,
-            left: `${idfret * 4}%`,
+            top: `${idstr * 1.25}rem`,
+            left: `${idfret * 6}%`,
             zIndex: 0,
             marginTop: '30px',
             marginLeft: '30px',
             width: '6%',
-            height: '6px',
+            height: '12px',
           }}
          ></div>
         //   // Unable to fix bugs with background image

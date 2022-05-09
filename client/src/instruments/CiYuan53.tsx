@@ -49,7 +49,7 @@ function FluteHole(holeIndex: number): JSX.Element {
 }
 
 // render the blow button and patch the click events to play sound
-function FluteBlow(synth?: Tone.Synth): JSX.Element {
+function FluteBlow(player: Tone.Sampler): JSX.Element {
     return (
         <img 
         src={blowFlute}
@@ -64,75 +64,75 @@ function FluteBlow(synth?: Tone.Synth): JSX.Element {
             
             // not all notes are correct, most of them are fake
             let note: string = {
-                "000000": "Bb5",  // fake
-                "000001": "A5",  // fake
-                "000010": "B5",  // fake
-                "000011": "Bb5",  // fake
-                "000100": "A5",  // fake
-                "000101": "C5",  // fake
-                "000110": "B5",  // fake
-                "000111": "C5",  // fake
-                "001000": "Db5",
-                "001001": "Db5",  // fake
-                "001010": "Gb4",
+                "000000": "B4",  // fake
+                "000001": "A4",  // fake
+                "000010": "B4",  // fake
+                "000011": "B4",  // fake
+                "000100": "A4",  // fake
+                "000101": "C4",  // fake
+                "000110": "B4",  // fake
+                "000111": "C4",  // fake
+                "001000": "D4",
+                "001001": "D4",  // fake
+                "001010": "G4",
                 "001011": "G4",  // fake
                 "001100": "F4",  // fake
                 "001101": "E4",  // fake
                 "001110": "E4",  // fake
                 "001111": "F4",  // fake
-                "010000": "Gb4",  // fake
-                "010001": "Eb4",  // fake
+                "010000": "G4",  // fake
+                "010001": "E4",  // fake
                 "010010": "G4",  // fake
                 "010011": "D4",  // fake
-                "010100": "Db4",  // fake
-                "010101": "Eb4",  // fake
-                "010110": "Gb4",  // fake
+                "010100": "D4",  // fake
+                "010101": "E4",  // fake
+                "010110": "G4",  // fake
                 "010111": "D4",  // fake
                 "011000": "G4",
                 "011001": "F4",  // fake
                 "011010": "G4",  // fake
-                "011011": "Db4",  // fake
-                "011100": "Gb4",
+                "011011": "D4",  // fake
+                "011100": "G4",
                 "011101": "D4",  // fake
                 "011110": "F4",
                 "011111": "G4",
                 "100000": "E4",
-                "100001": "Eb4",  // fake
+                "100001": "E4",  // fake
                 "100010": "C4",  // fake
                 "100011": "F4",  // fake
-                "100100": "Eb4",  // fake
+                "100100": "E4",  // fake
                 "100101": "B4",  // fake
-                "100110": "Gb4",  // fake
-                "100111": "Ab4",  // fake
+                "100110": "G4",  // fake
+                "100111": "A4",  // fake
                 "101000": "F4",
                 "101001": "C4",
-                "101010": "Gb4",  // fake
-                "101011": "Ab4",  // fake
+                "101010": "G4",  // fake
+                "101011": "A4",  // fake
                 "101100": "F4",
                 "101101": "B4",
                 "101110": "G4",  // fake
                 "101111": "B4",
                 "110000": "D4",
                 "110001": "A4",
-                "110010": "Bb4",
-                "110011": "Eb4",  // fake
-                "110100": "Db4",
-                "110101": "Ab4",
+                "110010": "B4",
+                "110011": "E4",  // fake
+                "110100": "D4",
+                "110101": "A4",
                 "110110": "A4",
                 "110111": "B4",  // fake
                 "111000": "C4",
                 "111001": "D4",  // fake
                 "111010": "E4",  // fake
                 "111011": "F4",  // fake
-                "111100": "B3",
-                "111101": "Bb",
-                "111110": "A3",
-                "111111": "G3"
-            }[key] || "C3";  // adding the default value to ignore error
+                "111100": "B4",
+                "111101": "B4",
+                "111110": "A4",
+                "111111": "G4"
+            }[key] || "C4";  // adding the default value to ignore error
 
-            synth?.triggerAttack(note);
+            player.triggerAttack(note);  // this is flute
         }}
-        onMouseUp={() => synth?.triggerRelease('+0.25')}
+        onMouseUp={() => player.triggerRelease('+0.25')}
         ></img>
     )
 }
@@ -152,7 +152,7 @@ function OscillatorType({ title, onClick, active }: any): JSX.Element {
     );
 }
 
-function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
+function BambooFlute({ synth, setSynth }: InstrumentProps): JSX.Element {
   const setOscillator = (newType: Tone.ToneOscillatorType) => {
     setSynth(oldSynth => {
       oldSynth.disconnect();
@@ -175,11 +175,24 @@ function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
     'amsawtooth',
     'amtriangle',
   ]) as List<OscillatorType>;
+  
+  const player = new Tone.Sampler({
+    urls: {
+      C4: "sound/1.m4a",
+      D4: "sound/2.m4a",
+      E4: "sound/3.m4a",
+      F4: "sound/4.m4a",
+      G4: "sound/5.m4a",
+      A4: "sound/6.m4a",
+      B4: "sound/7.m4a"
+    },
+    release: 1
+  }).toDestination();
 
   return (
     <div className="pv4">
       <div className="relative dib h4 w-100 ml4">
-        {FluteBlow(synth)}
+        {FluteBlow(player)}
         {Range(0,6).map(index => FluteHole(index))}
       </div>
 
@@ -197,4 +210,4 @@ function Piano({ synth, setSynth }: InstrumentProps): JSX.Element {
   );
 }
 
-export const BambooFluteInstrument = new Instrument('BambooFlute', Piano);
+export const BambooFluteInstrument = new Instrument('BambooFlute', BambooFlute);

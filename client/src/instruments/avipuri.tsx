@@ -8,7 +8,7 @@ import React from 'react';
 import { Instrument, InstrumentProps } from '../Instruments';
 
 // image imports
-import uke from '../img/uke.png';
+import uke from '../img/uke1.png';
 
 /** ------------------------------------------------------------------------ **
  * Contains implementation of components for Ukulele.
@@ -42,6 +42,14 @@ export function UkuleleKey({
         // 1. The JSX refers to the HTML-looking syntax within TypeScript.
         // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
         // 3. The curly braces `{` and `}` should remind you of string interpolation.
+        <div style={{
+          backgroundImage: `url(${uke})`,
+          backgroundPosition: 'left-center',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'contain',
+          width: '200%',
+          height: '300px',
+        }}>
         <div
           onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
           onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
@@ -52,26 +60,16 @@ export function UkuleleKey({
           style={{
             // CSS
             //center on postion of string and fret on image
-            top: `${idstr * 1.25}rem`,
-            left: `${idfret * 6}%`,
+            top: `${idstr * 1.35}rem`,
+            left: `${idfret * 3.15}%`,
             zIndex: 0,
-            marginTop: '30px',
-            marginLeft: '30px',
-            width: '6%',
-            height: '12px',
+            marginTop: '98px',
+            marginLeft: '160px',
+            width: '3.15%',
+            height: '30px',
           }}
          ></div>
-        //   // Unable to fix bugs with background image
-        //   // not resizeable/doesnt line up with keys if zoomed in
-        //   //background image uke 
-        //   style = {{
-        //   backgroundImage: `url(${uke})`,
-        //   backgroundPosition: 'left-center',
-        //   width: '200%',
-        //   height: '500px',
-        //   backgroundRepeat: 'no-repeat',
-        // }}>
-        // </div></>
+        </div> 
     );
 }
 
@@ -149,28 +147,32 @@ function Ukulele({ synth, setSynth }: InstrumentProps): JSX.Element {
       {note: 'G5', idx: 51 },
     ]);
 
-    const setOscillator = (newType: Tone.ToneOscillatorType) => {
-        setSynth(oldSynth => {
-          oldSynth.disconnect();
-    
-          return new Tone.Synth({
-            oscillator: { type: newType } as Tone.OmniOscillatorOptions,
-          }).toDestination();
-        });
-    };
+    // //used as insipration for plucksynth function
+    // const setPolySynth = (newType: Tone.ToneOscillatorType) => {
+    //   setSynth(oldSynth => {
+    //     oldSynth.disconnect();
+    //     const synth: Tone.Synth<Tone.SynthOptions> = new Tone.PolySynth(Tone.Synth, {
+    //       oscillator: { type: newType } as Tone.OmniOscillatorOptions,
+    //     }).toDestination() as unknown as Tone.Synth<Tone.SynthOptions>;
+    //     synth.set({ detune: -1200 });
+    //     return synth;
+    //   })
+    // }
 
-    const oscillators: List<OscillatorType> = List([
-        'sine',
-        'sawtooth',
-        'square',
-        'triangle',
-        'fmsine',
-        'fmsawtooth',
-        'fmtriangle',
-        'amsine',
-        'amsawtooth',
-        'amtriangle',
-    ]) as List<OscillatorType>;
+    //plucksynth
+    const setPluckSynth = () => {
+      setSynth(oldSynth => {
+        oldSynth.disconnect();
+        const synth: Tone.Synth<Tone.SynthOptions> = new Tone.PluckSynth({
+          attackNoise: 0.1,
+          dampening: 0.5,
+          resonance: 0.9,
+        }).toDestination() as unknown as Tone.Synth<Tone.SynthOptions>;
+        return synth;
+      }
+      );
+    }
+
 
     return (
       <div className="pv4">
@@ -191,16 +193,6 @@ function Ukulele({ synth, setSynth }: InstrumentProps): JSX.Element {
               );
             }),
           )}
-        </div>
-        <div className={'pl4 pt4 flex'}>
-          {oscillators.map(o => (
-            <UkuleleType
-              key={o}
-              title={o}
-              onClick={() => setOscillator(o)}
-              active={synth?.oscillator.type === o}
-            />
-          ))}
         </div>
       </div>
     );

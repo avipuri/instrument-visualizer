@@ -34,7 +34,7 @@ export function UkuleleKey({
      * See `PianoKeyWithoutJSX` for the React component without JSX.
      */
     // use idstr and idfret to get the postition of the fret and string based on index. 4 string 12 fret each.
-
+    //based on Duy's code
      let idstr = Math.floor(index/16);
      let idfret = index%16;
     return (
@@ -42,7 +42,6 @@ export function UkuleleKey({
         // 1. The JSX refers to the HTML-looking syntax within TypeScript.
         // 2. The JSX will be **transpiled** into the corresponding `React.createElement` library call.
         // 3. The curly braces `{` and `}` should remind you of string interpolation.
-        <>
         <div
           onMouseDown={() => synth?.triggerAttack(`${note}`)} // Question: what is `onMouseDown`?
           onMouseUp={() => synth?.triggerRelease('+0.25')} // Question: what is `onMouseUp`?
@@ -54,24 +53,25 @@ export function UkuleleKey({
             // CSS
             //center on postion of string and fret on image
             top: `${idstr * 1}rem`,
-            left: `${idfret * 2}%`,
+            left: `${idfret * 4}%`,
             zIndex: 0,
             marginTop: '30px',
-            marginLeft: '130px',
-            width: '2%',
+            marginLeft: '30px',
+            width: '6%',
             height: '6px',
           }}
-        ></div><div style={{
-          // Unable to fix bugs with background image
-          // not resizeable/doesnt line up with keys if zoomed in
-          //background image uke 
-          backgroundImage: `url(${uke})`,
-          backgroundPosition: 'left-center',
-          width: '200%',
-          height: '500px',
-          backgroundRepeat: 'no-repeat',
-        }}>
-        </div></>
+         ></div>
+        //   // Unable to fix bugs with background image
+        //   // not resizeable/doesnt line up with keys if zoomed in
+        //   //background image uke 
+        //   style = {{
+        //   backgroundImage: `url(${uke})`,
+        //   backgroundPosition: 'left-center',
+        //   width: '200%',
+        //   height: '500px',
+        //   backgroundRepeat: 'no-repeat',
+        // }}>
+        // </div></>
     );
 }
 

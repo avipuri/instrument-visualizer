@@ -10,6 +10,10 @@ import { DispatchAction } from './Reducer';
 import { SideNav } from './SideNav';
 import { InstrumentContainer } from './Instruments';
 import { VisualizerContainer } from './Visualizers';
+import { url } from 'inspector';
+
+// image imports
+import bg from './img/homepage_bg.jpg';
 
 
 /** ------------------------------------------------------------------------ **
@@ -95,15 +99,14 @@ function ShowWelcomePanel(): JSX.Element {
   return (
     <div
       className="absolute right-0 bottom-0 top-0 flex flex-column items-center justify-center"
-      style={{ left: '16rem' }}
+      style={{backgroundImage: `url(${bg})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover' , left: '16rem' }}
     >
       <div className="mw6 lh-copy mb4">
         <Music32 />
-        <div className="f3 fw7 mb2">Welcome to the case study.</div>
+        <div className="f3 fw7 mb2">Welcome to the GOATS music app.</div>
         <div className="f4 mb3">
           Select an instrument and a visualizer on the left to serve some fresh beats.
         </div>
-        <div className="f5">The UI is yours to design. Express yourself.</div>
       </div>
     </div>
   );

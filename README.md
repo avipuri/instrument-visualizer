@@ -48,6 +48,21 @@ Runs the server in development mode.
 The server will restart if you make edits.
 You will also see errors in the console.
 
+## How to run on Windows
+
+1. Drag and drop the project into the Visual Studio Code
+2. Open terminal on VSC
+3. cd client
+4. npm install react-scripts
+
+5. cd ..
+6. cd server
+7. npm i
+8. npm start
+
+9. open the new terminal on VSC
+10. cd client
+11. npm start
 use the following to install correct node version:
 
 

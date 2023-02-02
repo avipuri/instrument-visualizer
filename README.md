@@ -63,6 +63,8 @@ You will also see errors in the console.
 9. open the new terminal on VSC
 10. cd client
 11. npm start
+
+
 use the following to install correct node version:
 
 
